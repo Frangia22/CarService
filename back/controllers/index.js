@@ -1,5 +1,5 @@
-const authController = require('./auth')
+const serviCardController = require('./serviCard')
 
 module.exports = {
-  authController
+  serviCardController
 }

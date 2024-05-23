@@ -1,8 +1,8 @@
 const Express = require('express')
 const app = Express()
 
-const authRoutes = require('./auth')
+const serviCardRoutes = require('./serviCard')
 
-app.use('/auth', authRoutes)
+app.use('/servi-card', serviCardRoutes)
 
 module.exports = app

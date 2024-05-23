@@ -1,5 +1,5 @@
-const authService = require('./auth')
+const serviCardService = require('./serviCard')
 
 module.exports = {
-  authService
+  serviCardService
 }
