@@ -14,9 +14,28 @@ export function Checkbox ({ title, label, value }) {
   return (
     <div className='form-control'>
       <label className='label cursor-pointer'>
-        <span className='label-text font-bold max-w-[3.75rem]'>{title}:</span>
-        <span className='label-text'>{label}</span>
-        <input type='checkbox' defaultChecked className='checkbox mr-8' />
+        <span className='label-text font-bold max-w-[3.75rem] md:w-[3.75rem]'>{title}:</span>
+        <span className='label-text min-w-36'>{label}</span>
+        <input type='checkbox' className='checkbox md:mr-8' />
+      </label>
+    </div>
+  )
+}
+export function MultiCheckbox ({ title, label, label2, value }) {
+  return (
+    <div className='form-control'>
+      <label className='label cursor-pointer'>
+        <span className='label-text font-bold max-w-[3.75rem] md:w-[3.75rem]'>{title}:</span>
+        <div className='md:w-[18.55rem]'>
+          <div className='flex justify-between my-2 gap-8'>
+            <span className='label-text min-w-36'>{label}</span>
+            <input type='checkbox' defaultChecked className='checkbox md:mr-8' />
+          </div>
+          <div className='flex justify-between my-2'>
+            <span className='label-text min-w-36'>{label2}</span>
+            <input type='checkbox' defaultChecked className='checkbox md:mr-8' />
+          </div>
+        </div>
       </label>
     </div>
   )
@@ -30,13 +49,14 @@ export function AddCardServi () {
           <InputText label='Kilometros' type='text' placeholder='Ej: 10000' />
           <InputText label='Fecha' type='date' className='mb-4' />
           <Checkbox title='Motor' label='Cambio de aceite' />
+          <MultiCheckbox title='Tipo de aceite' label='5w40' label2='10w40' />
           <Checkbox title='Filtro de aceite' label='Cambio de aceite' />
-          <Checkbox title='Filtro de aire' label='Cambio' />
+          <MultiCheckbox title='Filtro de aire' label='Cambio' label2='Limpieza' />
           <Checkbox title='Filtro de nafta' label='Cambio' />
           <Checkbox title='Filtro de gasoil' label='Cambio' />
-          <Checkbox title='Filtro anti-polen' label='Cambio' />
+          <MultiCheckbox title='Filtro anti-polen' label='Cambio' label2='Limpieza' />
           <Checkbox title='Bujias' label='Cambio' />
-          <Checkbox title='Caja de velocidad' label='Nivel' />
+          <MultiCheckbox title='Caja de velocidad' label='Nivel' label2='Cambio de aceite' />
           <Checkbox title='Correa de distribución' label='Cambio' />
           <Checkbox title='Liquido de freno' label='Nivel' />
           <Checkbox title='Pastillas de freno' label='Cambio' />
