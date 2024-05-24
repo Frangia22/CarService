@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom'
 
+export function ItemList ({ title, value }) {
+  return (
+    <li>
+      <p className='text-sm my-4'>{title}: <strong className='text-base mx-4'>{value}</strong></p>
+    </li>
+  )
+}
+
 export function Home () {
   return (
     <>
@@ -45,12 +53,36 @@ export function Home () {
         </div>
         <dialog id='my_modal_1' className='modal'>
           <div className='modal-box'>
-            <h3 className='font-bold text-lg'>Hello!</h3>
-            <p className='py-4'>Press ESC key or click the button below to close</p>
-            <div className='modal-action'>
+            <ul>
+              <li>
+                <h2 className='text-xl font-bold text-center'>
+                  Servi
+                  <span className='badge badge-neutral badge-lg mx-4'>AB777CD</span>
+                </h2>
+              </li>
+              <li>
+                <p className='my-4'>Kilometros: <strong className='mx-4 badge badge-info'>100000 KM</strong></p>
+              </li>
+              <ItemList title='Fecha' value='25-05-2024' />
+              <ItemList title='Motor' value='Cambio de aceite' />
+              <ItemList title='Tipo de aceite' value='5w40' />
+              <ItemList title='Filtro de aceite ' value='Cambio de aceite' />
+              <ItemList title='Filtro de aire' value='Limpieza' />
+              <ItemList title='Filtro de nafta' value='Cambio' />
+              <ItemList title='Filtro de gasoil' value='Cambio' />
+              <ItemList title='Filtro anti-polen' value='Cambio' />
+              <ItemList title='Bujias' value='Cambio' />
+              <ItemList title='Caja de velocidad' value='Nivel' />
+              <ItemList title='Correa de distribución' value='-' />
+              <ItemList title='Liquido de freno' value='Nivel' />
+              <ItemList title='Pastillas de freno' value='Cambio' />
+              <ItemList title='Alineación' value='No' />
+              <ItemList title='Diferencial' value='No' />
+              <ItemList title='Reemplazo agua motor' value='Si' />
+            </ul>
+            <div className='modal-action justify-center'>
               <form method='dialog'>
-                {/* if there is a button in form, it will close the modal */}
-                <button className='btn'>Close</button>
+                <button className='btn btn-sm btn-accent w-32'>Cerrar</button>
               </form>
             </div>
           </div>
