@@ -13,7 +13,7 @@ export function ItemList ({ title, value }) {
 export function Home () {
   const [cardSelect, setCardSelect] = useState([])
   const [search, setSearch] = useState('')
-  const serviCard = responseApi.dataRow
+  let serviCard = search ? responseApi.dataRow.filter((cards) => cards.patent.includes(search)) : responseApi.dataRow
   const hasServiCard = serviCard.length > 0
   const handleView = (id) => {
     document.getElementById('my_modal_1').showModal()
@@ -22,7 +22,7 @@ export function Home () {
   }
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log('Buscar: ', search)
+    serviCard = responseApi.dataRow.filter((cards) => cards.patent.includes(search))
   }
   const handleChangeSearch = (event) => {
     const newSearch = event.target.value

@@ -65,7 +65,7 @@ export function AddCardServi () {
           <Checkbox title='Reemplazo agua motor' label='Si' />
           <div className='flex justify-evenly py-4'>
             <button type='submit' className='btn btn-sm btn-primary'>Agregar</button>
-            <Link to='/' class='btn btn-sm btn-outline btn-accent'>Cancelar</Link>
+            <Link to='/' className='btn btn-sm btn-outline btn-accent'>Cancelar</Link>
           </div>
         </form>
       </section>
