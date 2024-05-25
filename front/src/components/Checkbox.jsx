@@ -9,7 +9,7 @@ export function Checkbox ({ title, label, value, handleChange }) {
     </div>
   )
 }
-export function MultiCheckbox ({ title, label, label2, value, value2, handleChange }) {
+export function MultiCheckbox ({ title, label, label2, value, value2, handleChange, name }) {
   return (
     <div className='form-control'>
       <label className='label cursor-pointer'>
@@ -17,11 +17,11 @@ export function MultiCheckbox ({ title, label, label2, value, value2, handleChan
         <div onChange={handleChange} className='md:w-[18.55rem]'>
           <div className='flex justify-between my-2 gap-8'>
             <span className='label-text min-w-36'>{label}</span>
-            <input value={value} type='checkbox' defaultChecked className='checkbox md:mr-8' />
+            <input value={value} name={name} type='radio' className='radio md:mr-8' />
           </div>
           <div className='flex justify-between my-2'>
             <span className='label-text min-w-36'>{label2}</span>
-            <input value={value2} type='checkbox' defaultChecked className='checkbox md:mr-8' />
+            <input value={value2} name={name} type='radio' className='radio md:mr-8' />
           </div>
         </div>
       </label>
