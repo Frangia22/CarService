@@ -3,6 +3,7 @@ const router = express.Router()
 const { serviCardController } = require('../../controllers')
 const { serviCardValidations } = require('../../helpers/validations')
 
+router.get('/', serviCardController.getServiCardAll)
 router.get('/hello', serviCardController.helloWorld)
 router.post('/', serviCardValidations, serviCardController.createServiCard)
 

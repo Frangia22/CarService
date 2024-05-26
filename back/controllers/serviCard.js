@@ -4,6 +4,14 @@ const helloWorld = (req, res) => {
   const saludo = serviCardService.helloWorld()
   res.send(saludo)
 }
+const getServiCardAll = async (req, res) => {
+  try {
+    const serviCards = await serviCardService.getServiCardAll(req, res)
+    res.status(200).json(serviCards)
+  } catch (error) {
+    res.status(404).json({ error, message: 'No hay tarjetas' })
+  }
+}
 const createServiCard = async (req, res) => {
   try {
     const serviCard = await serviCardService.createServiCard(req.body)
@@ -15,5 +23,6 @@ const createServiCard = async (req, res) => {
 
 module.exports = {
   helloWorld,
+  getServiCardAll,
   createServiCard
 }
