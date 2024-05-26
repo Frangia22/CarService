@@ -24,6 +24,14 @@ const getServiCardAll = async (req, res) => {
     throw new Error(error.message)
   }
 }
+const getServiCardById = async (id) => {
+  try {
+    const serviCard = await ServiCar.findByPk()
+    return serviCard
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
 const createServiCard = async (serviCardData) => {
   try {
     const serviCard = await ServiCar.create(serviCardData)
@@ -35,5 +43,6 @@ const createServiCard = async (serviCardData) => {
 module.exports = {
   helloWorld,
   getServiCardAll,
+  getServiCardById,
   createServiCard
 }
