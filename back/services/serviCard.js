@@ -26,7 +26,7 @@ const getServiCardAll = async (req, res) => {
 }
 const getServiCardById = async (id) => {
   try {
-    const serviCard = await ServiCar.findByPk()
+    const serviCard = await ServiCar.findByPk(id)
     return serviCard
   } catch (error) {
     throw new Error(error.message)
