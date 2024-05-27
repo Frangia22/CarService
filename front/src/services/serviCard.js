@@ -15,3 +15,17 @@ export const getServiCardById = async (id) => {
     throw new Error(error)
   }
 }
+export const createServiCard = async (dataServiCard) => {
+  try {
+    const res = await fetch(`${API_URL}/servi-card`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataServiCard)
+    })
+    return res.json()
+  } catch (error) {
+    throw new Error(error)
+  }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getServiCardAll, getServiCardById } from '../services/serviCard'
+import { createServiCard, getServiCardAll, getServiCardById } from '../services/serviCard'
 
 export function useServiCard () {
   const [dataRow, setDataRow] = useState([])
@@ -35,8 +35,16 @@ export function useServiCard () {
       setError(error.message)
     }
   }
+  const createNewServiCard = async (dataServiCard) => {
+    try {
+      const res = createServiCard(dataServiCard)
+      return res
+    } catch (error) {
+      setError(error.message)
+    }
+  }
   useEffect(() => {
     getServiCard()
   }, [])
-  return { getServiCard, dataRow, totalItems, totalPages, currentPage, loading, error, getServiCardByPk, cardSelect }
+  return { getServiCard, dataRow, totalItems, totalPages, currentPage, loading, error, getServiCardByPk, cardSelect, createNewServiCard }
 }
