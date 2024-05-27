@@ -1,11 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from '../components/Input'
 import { Checkbox, MultiCheckbox } from '../components/Checkbox'
 import { useState } from 'react'
+import { useServiCard } from '../hooks/useServiCard'
+import { Popups } from '../components/Popups'
 
 export function AddCardServi () {
+  const navigate = useNavigate()
+  const { createNewServiCard } = useServiCard()
   const [patent, setPatent] = useState('')
-  const [kilometers, setKilometers] = useState('')
+  const [kilometers, setKilometers] = useState(0)
   const [date, setDate] = useState('')
   const [engine, setEngine] = useState(false)
   const [typeOfOil, setTypeOfOil] = useState('')
@@ -22,6 +26,7 @@ export function AddCardServi () {
   const [alignment, setAlignment] = useState(false)
   const [differential, setDifferential] = useState(false)
   const [changeEngineWater, setChangeEngineWater] = useState(false)
+  const [show, setShow] = useState({ error: false, success: false, message: '' })
   const handleChangePatent = (event) => {
     const newPatent = event.target.value
     setPatent(newPatent)
@@ -94,15 +99,70 @@ export function AddCardServi () {
     const newEngineWater = event.target.checked
     setChangeEngineWater(newEngineWater)
   }
-  const handleSubmit = (event) => {
+  const resetForm = () => {
+    setPatent('')
+    setKilometers(0)
+    setDate('')
+    setEngine(false)
+    setTypeOfOil('')
+    setFilterOfOil(false)
+    setFilterOfAir('')
+    setGasolineFilter(false)
+    setFilterOfGasoil(false)
+    setFilterAntiPolen('')
+    setPlugs(false)
+    setBoxOfVelocity('')
+    setTimingBelt(false)
+    setBrakeFluid(false)
+    setBrakePads(false)
+    setAlignment(false)
+    setDifferential(false)
+    setChangeEngineWater(false)
+  }
+  const handleSubmit = async (event) => {
     event.preventDefault()
+    const data = {
+      patent,
+      kilometers,
+      date,
+      engine,
+      type_of_oil: typeOfOil,
+      filter_of_oil: filterOfOil,
+      filter_of_air: filterOfAir,
+      gasoline_filter: gasolineFilter,
+      filter_of_gasoil: filterOfGasoil,
+      filter_anti_polen: filterAntiPolen,
+      plugs,
+      box_of_velocity: boxOfVelocity,
+      timing_belt: timingBelt,
+      brake_fluid: brakeFluid,
+      brake_pads: brakePads,
+      alignment,
+      differential,
+      change_engine_water: changeEngineWater
+    }
+    try {
+      const res = await createNewServiCard(data)
+      if (!res.errors) {
+        setShow({ ...show, success: true, error: false, message: 'Tarjeta creada con exito!, en breve vuelve al inicio.' })
+        resetForm()
+        setTimeout(() => {
+          navigate('/')
+        }, 2000)
+      } else {
+        setShow({ ...show, error: true, message: 'Hubo un error al crear la tarjeta' })
+      }
+    } catch (error) {
+      setShow({ ...show, error: true, message: 'Hubo un error al crear la tarjeta' })
+      console.error('Hubo un error al crear la tarjeta: ', error)
+    }
   }
   return (
     <main className='md:w-full my-6'>
       <section className='mx-4 md:w-1/4 md:mx-auto bg-slate-100/80 dark:bg-stone-800/50 rounded-lg shadow-xl'>
         <form className='px-4 md:px-2' onSubmit={handleSubmit}>
           <InputText label='Patente' type='text' placeholder='Ej: AB777CD' value={patent} handleChange={handleChangePatent} />
-          <InputText label='Kilometros' type='text' placeholder='Ej: 10000' value={kilometers} handleChange={handleChangeKilometers} />
+          <InputText label='Kilometros' type='number' placeholder='Ej: 10000' value={kilometers} handleChange={handleChangeKilometers} />
           <InputText label='Fecha' type='date' value={date} handleChange={handleChangeDate} className='mb-4' />
           <Checkbox title='Motor' label='Cambio de aceite' value={engine} handleChange={handleChangeEngine} />
           <MultiCheckbox title='Tipo de aceite' name='typeOfOil' label='5w40' label2='10w40' value='5w40' value2='10w40' handleChange={handleTypeOfOil} />
@@ -125,6 +185,7 @@ export function AddCardServi () {
           </div>
         </form>
       </section>
+      {show && <Popups showMessage={show.success || show.error} message={show.message} className={show.error ? 'alert-error' : 'alert-success'} onClick={() => setShow(false)} />}
     </main>
   )
 }
