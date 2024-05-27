@@ -202,7 +202,7 @@ export function AddCardServi () {
           </div>
         </form>
       </section>
-      {show && <Popups showMessage={show.success || show.error} message={show.message} className={show.error ? 'alert-error' : 'alert-success'} onClick={() => setShow(false)} />}
+      {show && <Popups showMessage={show.success || show.error} message={show.message} showIcon={show.success} className={show.error ? 'alert-error' : 'alert-success'} onClick={() => setShow(false)} />}
     </main>
   )
 }
