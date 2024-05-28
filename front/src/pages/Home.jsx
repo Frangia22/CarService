@@ -5,6 +5,7 @@ import { ServiCardDetail } from '../components/ServiCardDetail'
 import { TableCard } from '../components/TableCard'
 import { useServiCard } from '../hooks/useServiCard'
 import { TableSkeleton } from '../skeletons/Table'
+import { Footer } from '../components/Footer'
 
 export default function Home () {
   const [rows] = useState(5)
@@ -53,6 +54,7 @@ export default function Home () {
           </div>
         </dialog>
       </main>
+      <Footer />
     </>
   )
 }
