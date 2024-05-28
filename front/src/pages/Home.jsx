@@ -6,7 +6,7 @@ import { TableCard } from '../components/TableCard'
 import { useServiCard } from '../hooks/useServiCard'
 import { TableSkeleton } from '../skeletons/Table'
 
-export function Home () {
+export default function Home () {
   const [rows] = useState(5)
   const [search, setSearch] = useState('')
   const { getServiCard, dataRow, loading, getServiCardByPk, cardSelect } = useServiCard({ rows, search })

@@ -6,7 +6,7 @@ import { useServiCard } from '../hooks/useServiCard'
 import { Popups } from '../components/Popups'
 import { validateIsNumber, validateRequired } from '../helpers/validations'
 
-export function AddCardServi () {
+export default function AddCardServi () {
   const navigate = useNavigate()
   const { createNewServiCard } = useServiCard()
   const [patent, setPatent] = useState('')
