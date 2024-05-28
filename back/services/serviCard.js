@@ -40,9 +40,40 @@ const createServiCard = async (serviCardData) => {
     throw new Error(error.message)
   }
 }
+const updateServiCard = async (id, serviCardData) => {
+  try {
+    const serviCardExist = await ServiCar.findByPk(id)
+    if (serviCardExist !== null) {
+      const serviCardUpdated = await ServiCar.update(serviCardData, {
+        where: {
+          id
+        }
+      })
+      return serviCardUpdated
+    }
+    return false
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+const deleteServiCard = async (req, res) => {
+  try {
+    const ids = req.split(',')
+    const deleteCountServiCard = await ServiCar.destroy({
+      where: {
+        id: ids
+      }
+    })
+    return deleteCountServiCard
+  } catch (error) {
+    throw new Error(error)
+  }
+}
 module.exports = {
   helloWorld,
   getServiCardAll,
   getServiCardById,
-  createServiCard
+  createServiCard,
+  updateServiCard,
+  deleteServiCard
 }

@@ -30,10 +30,33 @@ const createServiCard = async (req, res) => {
     res.status(400).json({ error: `Tarjeta not created ${error}` })
   }
 }
+const updateServiCard = async (req, res) => {
+  try {
+    const serviCardUpdated = await serviCardService.updateServiCard(req.params.id, req.body)
+    serviCardUpdated > 0
+      ? res.status(201).json({ message: 'Tarjeta actualizada con exito' })
+      : res.status(404).json({ error: 'Tarjeta no encontrada' })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+const deleteServiCard = async (req, res) => {
+  try {
+    const serviCardDeleteCount = await serviCardService.deleteServiCard(req.params.id)
+    serviCardDeleteCount > 0
+      ? res.status(200).json({ message: 'Tarjeta/s eliminadas' })
+      : res.status(404).json({ error: 'Tarjeta/s no encontradas' })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Tarjeta/s no eliminadas' })
+  }
+}
 
 module.exports = {
   helloWorld,
   getServiCardAll,
   getServiCardById,
-  createServiCard
+  createServiCard,
+  updateServiCard,
+  deleteServiCard
 }
