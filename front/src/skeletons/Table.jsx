@@ -12,9 +12,9 @@ export function TableSkeleton ({ rows }) {
         {
           rows.map(card => (
             <tr key={card}>
-              <td className='skeleton w-auto' />
-              <td className='skeleton w-auto' />
-              <td className='skeleton w-auto' />
+              <td className='skeleton w-auto h-8' />
+              <td className='skeleton w-auto h-8' />
+              <td className='skeleton w-auto h-8' />
             </tr>
           ))
         }
