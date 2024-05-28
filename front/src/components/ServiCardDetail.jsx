@@ -26,9 +26,9 @@ export function ServiCardDetail ({ dataRow }) {
         <ItemList title='Correa de distribución' value={item.timing_belt ? 'Cambio' : ''} />
         <ItemList title='Liquido de freno' value={item.brake_fluid ? 'Nivel' : ''} />
         <ItemList title='Pastillas de freno' value={item.brake_pads ? 'Cambio' : ''} />
-        <ItemList title='Alineación' value={item.alignment ? 'Si' : 'No'} />
-        <ItemList title='Diferencial' value={item.differential ? 'Si' : 'No'} />
-        <ItemList title='Reemplazo agua motor' value={item.change_engine_water ? 'Si' : 'No'} />
+        <ItemList title='Alineación' value={item.alignment ? 'Si' : ''} />
+        <ItemList title='Diferencial' value={item.differential ? 'Si' : ''} />
+        <ItemList title='Reemplazo agua motor' value={item.change_engine_water ? 'Si' : ''} />
       </ul>
     ))
   )
