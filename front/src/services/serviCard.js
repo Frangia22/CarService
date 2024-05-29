@@ -29,3 +29,16 @@ export const createServiCard = async (dataServiCard) => {
     throw new Error(error)
   }
 }
+export const deleteServiCard = async (id) => {
+  try {
+    const res = await fetch(`${API_URL}/servi-card/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return res.json()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
