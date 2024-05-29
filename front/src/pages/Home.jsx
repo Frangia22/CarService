@@ -7,6 +7,7 @@ import { useServiCard } from '../hooks/useServiCard'
 import { TableSkeleton } from '../skeletons/Table'
 import { Footer } from '../components/Footer'
 import { Popups } from '../components/Popups'
+import { ToggleTheme } from '../components/ToggleTheme'
 
 export default function Home () {
   const [rows] = useState(5)
@@ -44,6 +45,7 @@ export default function Home () {
   }
   return (
     <>
+      <ToggleTheme />
       <main className='w-full my-6'>
         <form className='w-full px-4 md:w-1/4 md:mx-auto'>
           <label className='input input-bordered flex items-center gap-2'>
