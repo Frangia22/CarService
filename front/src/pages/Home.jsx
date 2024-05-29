@@ -6,11 +6,13 @@ import { TableCard } from '../components/TableCard'
 import { useServiCard } from '../hooks/useServiCard'
 import { TableSkeleton } from '../skeletons/Table'
 import { Footer } from '../components/Footer'
+import { Popups } from '../components/Popups'
 
 export default function Home () {
   const [rows] = useState(5)
   const [search, setSearch] = useState('')
-  const { getServiCard, dataRow, loading, getServiCardByPk, cardSelect } = useServiCard({ rows, search })
+  const [show, setShow] = useState({ error: false, success: false, message: '' })
+  const { getServiCard, dataRow, loading, getServiCardByPk, cardSelect, deletedServiCard } = useServiCard({ rows, search })
   const hasServiCard = dataRow.length > 0
   const debounceSearchData = useCallback(
     debounce((rows, search) => {
@@ -20,6 +22,20 @@ export default function Home () {
   const handleView = (id) => {
     document.getElementById('my_modal_1').showModal()
     getServiCardByPk(id)
+  }
+  const handleDelete = async (id) => {
+    try {
+      const res = await deletedServiCard(id)
+      if (res) {
+        getServiCard(rows)
+        setShow({ ...show, success: true, error: false, message: 'Tarjeta eliminada con éxito!' })
+        setTimeout(() => {
+          setShow({ ...show, success: false, error: false, message: '' })
+        }, 1500)
+      }
+    } catch (error) {
+      setShow({ ...show, success: false, error: true, message: 'Hubo un error al eliminar la tarjeta' })
+    }
   }
   const handleChangeSearch = (event) => {
     const newSearch = event.target.value
@@ -40,7 +56,7 @@ export default function Home () {
           {
             loading
               ? <TableSkeleton rows={[1, 2, 3, 4, 5]} />
-              : <TableCard dataRow={dataRow} hasCardServi={hasServiCard} onHandleView={handleView} />
+              : <TableCard dataRow={dataRow} hasCardServi={hasServiCard} onHandleView={handleView} onHandleDelete={handleDelete} />
           }
         </div>
         <dialog id='my_modal_1' className='modal'>
@@ -54,6 +70,7 @@ export default function Home () {
           </div>
         </dialog>
       </main>
+      {show && <Popups showMessage={show.success || show.error} message={show.message} showIcon={show.success} className={show.error ? 'alert-error' : 'alert-success'} onClick={() => setShow(false)} />}
       <Footer />
     </>
   )
