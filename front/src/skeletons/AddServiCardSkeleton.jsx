@@ -41,7 +41,7 @@ export function MultiCheckboxSkeleton () {
 export function AddServiCardSkeleton () {
   return (
     <main className='md:w-full my-6'>
-      <section className='mx-4 md:w-1/4 md:mx-auto bg-slate-100/80 dark:bg-stone-800/50 rounded-lg shadow-xl'>
+      <section className='mx-4 md:w-1/4 md:mx-auto bg-base-300/50 rounded-lg shadow-xl'>
         <form className='px-4 md:px-2'>
           <InputSkeleton />
           <InputSkeleton />

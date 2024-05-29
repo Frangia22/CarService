@@ -176,7 +176,7 @@ export default function AddCardServi () {
   }
   return (
     <main className='md:w-full my-6'>
-      <section className='mx-4 md:w-1/4 md:mx-auto bg-slate-100/80 dark:bg-stone-800/50 rounded-lg shadow-xl'>
+      <section className='mx-4 md:w-1/4 md:mx-auto bg-base-300/50 rounded-lg shadow-xl'>
         <form className='px-4 md:px-2' onSubmit={handleSubmit}>
           <InputText label='Patente' type='text' error={errors.patent} placeholder='Ej: AB777CD' value={patent} handleChange={handleChangePatent} />
           <InputText label='Kilometros' type='number' error={errors.kilometers} placeholder='Ej: 10000' value={kilometers} handleChange={handleChangeKilometers} />

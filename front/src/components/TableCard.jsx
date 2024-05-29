@@ -20,9 +20,9 @@ export function WithCardServi ({ dataRow, onHandleView, onHandleDelete }) {
     <table className='table table-xs md:table-md table-zebra mt-4'>
       <thead>
         <tr>
-          <th className='text-neutral dark:text-neutral-content'>Patente</th>
-          <th className='text-neutral dark:text-neutral-content'>Fecha</th>
-          <th className='text-neutral dark:text-neutral-content'>Acciones</th>
+          <th className='text-base-content'>Patente</th>
+          <th className='text-base-content'>Fecha</th>
+          <th className='text-base-content'>Acciones</th>
         </tr>
       </thead>
       <tbody>
