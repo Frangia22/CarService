@@ -191,7 +191,7 @@ GET /api/v1/servi-card/1
       "id": 1,
       "patent": "ABC123",
       "kilometers": 10000,
-      "date": "2024-05-30",
+      "date": "2024-05-30"
       // ... resto de campos
     }
   ]
@@ -470,7 +470,7 @@ Obtiene una tarjeta por su ID.
 
 ```javascript
 {
-  dataRow: Array  // Array con un solo elemento (la tarjeta) o null
+  dataRow: Array; // Array con un solo elemento (la tarjeta) o null
 }
 ```
 
@@ -503,7 +503,7 @@ Crea una nueva tarjeta de servicio.
 const data = {
   patent: "ABC123",
   kilometers: 10000,
-  date: "2024-05-30"
+  date: "2024-05-30",
 };
 
 const serviCard = await createServiCard(data);
@@ -1229,6 +1229,20 @@ npx sequelize-cli db:migrate:undo:all
 - Se utiliza **Sequelize** como ORM, lo que facilita el cambio de base de datos si es necesario
 - El sistema de logging con Winston permite auditoría y debugging en producción
 - La validación de variables de entorno con `envalid` previene errores de configuración comunes
+
+---
+
+## 🗺️ Roadmap y Mejoras Futuras
+
+Para ver el roadmap completo de mejoras planificadas para escalabilidad y robustez, consulta:
+
+**[📋 Roadmap de Mejoras](./docs/ROADMAP.md)**
+
+El roadmap incluye:
+
+- **Quick Wins**: Mejoras rápidas de alto impacto (middleware de errores, health checks, compresión)
+- **Medium Effort**: Mejoras de esfuerzo medio (autenticación JWT, rate limiting, testing)
+- **Strategic**: Mejoras estratégicas a largo plazo (caché Redis, monitoreo APM, CI/CD)
 
 ---
 
