@@ -57,6 +57,7 @@ timeline
         Multi-Tenancy : Aislamiento de datos por taller
         Sistema de Planes : Limitaciones y funcionalidades por plan
         Sistema de Caché Redis : Escalabilidad para alto tráfico
+        Plantillas Personalizadas : Editor y gestión Enterprise
         Documentación API Swagger : Mejora DX y adopción
         Transacciones de BD : Integridad de datos complejos
         Monitoreo y APM : Observabilidad en producción
@@ -147,6 +148,9 @@ flowchart TB
     D --> S
     I --> T
     G -.-> U
+    W --> V
+    W --> X
+    L --> W
     L --> V
     V --> W
     W --> X
@@ -724,6 +728,7 @@ Implementar sistema de planes de suscripción con limitaciones específicas por 
   - Backup automático diario
   - White-label (personalización de marca)
   - Acceso a API de webhooks
+  - **Plantillas personalizadas de tarjetas** (editor visual, subida de diseños, branding completo)
 
 **Componentes del Sistema:**
 
@@ -885,6 +890,7 @@ const PLAN_LIMITS = {
       api_access: false,
       webhooks: false,
       white_label: false,
+      custom_templates: false,
     },
   },
   professional: {
@@ -898,6 +904,7 @@ const PLAN_LIMITS = {
       api_access: true,
       webhooks: false,
       white_label: false,
+      custom_templates: false,
     },
   },
   enterprise: {
@@ -911,6 +918,7 @@ const PLAN_LIMITS = {
       api_access: true,
       webhooks: true,
       white_label: true,
+      custom_templates: true, // Plantillas personalizadas
     },
   },
 };
@@ -1104,7 +1112,188 @@ Implementar sistema de monitoreo para métricas de rendimiento y alertas.
 
 ---
 
-#### 16. CI/CD Pipeline
+#### 16. Sistema de Plantillas Personalizadas (Enterprise)
+
+**Prioridad:** Media-Alta  
+**Esfuerzo:** 2-3 semanas  
+**Impacto:** Alto (diferenciador competitivo)
+
+**Descripción:**
+Implementar sistema completo de gestión de plantillas personalizadas para tarjetas de servicio. Permite a talleres del plan Enterprise crear, almacenar y aplicar diseños personalizados a sus tarjetas, incluyendo logos, colores, fuentes y layouts personalizados.
+
+**Componentes del Sistema:**
+
+1. **Modelo de Plantilla:**
+
+   ```javascript
+   // models/template.js
+   {
+     id: UUID,
+     workshop_id: UUID,
+     name: STRING,
+     description: TEXT,
+     design_config: JSON, // Configuración de diseño
+     logo_url: STRING,
+     is_active: BOOLEAN,
+     is_default: BOOLEAN,
+     created_at: DATE,
+     updated_at: DATE
+   }
+   ```
+
+2. **Almacenamiento de Archivos:**
+
+   - Logos e imágenes de plantillas
+   - Integración con S3/Cloudinary
+   - Validación de tipos y tamaños
+   - Compresión automática
+
+3. **Generación de PDFs Personalizados:**
+
+   - Renderizado de tarjetas con plantilla
+   - Inclusión de branding del taller
+   - Exportación en múltiples formatos
+
+4. **Endpoints de API:**
+
+   ```javascript
+   // routes/templates.js
+   GET    /templates              // Listar plantillas del taller
+   GET    /templates/:id          // Obtener plantilla específica
+   POST   /templates              // Crear nueva plantilla
+   PUT    /templates/:id          // Actualizar plantilla
+   DELETE /templates/:id          // Eliminar plantilla
+   POST   /templates/:id/activate // Activar plantilla
+   POST   /templates/:id/duplicate // Duplicar plantilla
+   GET    /templates/default      // Obtener plantillas predeterminadas
+   ```
+
+5. **Validación de Plan:**
+   ```javascript
+   // middleware/requireEnterprisePlan.js
+   const requireEnterprisePlan = async (req, res, next) => {
+     const workshop = await Workshop.findByPk(req.workshopId, {
+       include: [{ model: Plan }],
+     });
+
+     if (workshop.Plan.name !== "enterprise") {
+       return res.status(403).json({
+         error: "Esta funcionalidad está disponible solo en el plan Enterprise",
+         upgrade_url: "/billing/upgrade",
+       });
+     }
+
+     next();
+   };
+   ```
+
+**Estructura de design_config (JSON):**
+
+```json
+{
+  "colors": {
+    "primary": "#16a34a",
+    "secondary": "#15803d",
+    "background": "#ffffff",
+    "text": "#1f2937"
+  },
+  "fonts": {
+    "heading": "Arial",
+    "body": "Helvetica",
+    "size": {
+      "heading": 24,
+      "body": 14
+    }
+  },
+  "layout": {
+    "logo_position": "top-center",
+    "fields_order": ["patent", "date", "kilometers"],
+    "sections": [
+      {
+        "name": "header",
+        "fields": ["patent", "date"]
+      },
+      {
+        "name": "body",
+        "fields": ["kilometers", "engine", "type_of_oil"]
+      }
+    ]
+  },
+  "logo": {
+    "url": "https://storage.../logo.png",
+    "size": "medium",
+    "position": "header"
+  },
+  "branding": {
+    "show_workshop_name": true,
+    "show_workshop_address": false,
+    "footer_text": "Gracias por confiar en nosotros"
+  }
+}
+```
+
+**Servicio de Generación de PDF:**
+
+```javascript
+// services/pdfGenerator.js
+const generatePDFWithTemplate = async (cardData, templateId) => {
+  const template = await Template.findByPk(templateId);
+  const html = renderTemplate(template.design_config, cardData);
+
+  // Usar puppeteer o similar para generar PDF
+  const pdf = await generatePDFFromHTML(html);
+
+  return pdf;
+};
+
+const renderTemplate = (designConfig, cardData) => {
+  // Renderizar HTML con los datos de la tarjeta
+  // Aplicar estilos y layout según designConfig
+  return htmlTemplate;
+};
+```
+
+**Limitaciones por Plan:**
+
+- **Starter/Professional:**
+  - Solo plantillas predeterminadas del sistema
+  - Sin personalización
+- **Enterprise:**
+  - Plantillas personalizadas ilimitadas
+  - Editor visual completo
+  - Subida de logos e imágenes
+  - Branding completo
+
+**Beneficios:**
+
+- Diferenciador competitivo fuerte
+- Valor agregado significativo para plan Enterprise
+- Permite identidad visual única por taller
+- Mejora la experiencia del cliente final
+- Facilita el marketing y branding
+
+**Consideraciones Técnicas:**
+
+1. **Almacenamiento:**
+
+   - Usar servicio de almacenamiento cloud (S3, Cloudinary)
+   - Validar tamaños y formatos de archivos
+   - Implementar CDN para entrega rápida
+
+2. **Rendimiento:**
+
+   - Caché de plantillas renderizadas
+   - Optimización de imágenes
+   - Generación asíncrona de PDFs
+
+3. **Seguridad:**
+   - Validar que plantillas pertenezcan al taller
+   - Sanitizar HTML generado
+   - Límites de tamaño de archivos
+
+---
+
+#### 17. CI/CD Pipeline
 
 **Prioridad:** Media  
 **Esfuerzo:** 1 semana  
@@ -1161,7 +1350,8 @@ Automatizar pruebas, builds y despliegues.
 
 14. ✅ Transacciones de BD
 15. ✅ Monitoreo y APM
-16. ✅ CI/CD Pipeline
+16. ✅ Sistema de Plantillas Personalizadas (Enterprise)
+17. ✅ CI/CD Pipeline
 
 ---
 

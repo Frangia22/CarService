@@ -833,4 +833,18 @@ dist/
 
 ---
 
+## 🗺️ Roadmap y Mejoras Futuras
+
+Para ver el roadmap completo de mejoras planificadas para escalabilidad y robustez, consulta:
+
+**[📋 Roadmap de Mejoras](./docs/ROADMAP.md)**
+
+El roadmap incluye:
+
+- **Quick Wins**: Mejoras rápidas de alto impacto (error boundaries, interceptores HTTP, paginación visual)
+- **Medium Effort**: Mejoras de esfuerzo medio (autenticación, estado global, optimistic updates, plan limits UI)
+- **Strategic**: Mejoras estratégicas a largo plazo (React Query, testing, PWA, internacionalización)
+
+---
+
 **Última actualización:** Mayo 2024
